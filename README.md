@@ -48,6 +48,7 @@ Dica: Utilizar o seguinte plugin no VSCode **Live Server** e rodar o comando `gu
 ├── node_modules/                       # → Pacotes Node.js (nunca edite)
 ├── src/                                # → Modelo de tema
 │   ├── index.html                      # → Página inicial (html nesta camada)
+│   ├── components/                     # → Pasta de components HTML (pode criar pastas avontade apenas de html)
 │   └── assets/                         # → Arquivos auxiliares
 │       ├── img/                        # → Todas imagens
 │       ├── js/                         # → Todos os Javascript
