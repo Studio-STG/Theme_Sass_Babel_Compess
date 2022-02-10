@@ -4,6 +4,7 @@ const gulp = require('gulp');
 const { series,  watch} = require('gulp');
 
 // Plugins
+const imagemin = require('gulp-imagemin');
 const htmlmin = require('gulp-htmlmin');
 const fileinclude = require('gulp-file-include');
 const babel = require('gulp-babel');
@@ -11,7 +12,6 @@ const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const sass = require('gulp-sass')(require('sass'));
 var rename = require("gulp-rename");
-
 
 
 /* Production */
@@ -43,6 +43,12 @@ function buildHtmlmin() {
         .pipe(gulp.dest('dist'));
 }
 
+function compressImage() {
+    return gulp.src('src/assets/img/*')
+    .pipe(imagemin())
+    .pipe(gulp.dest('dist/assets/img'))
+}
+
 /* Development */
 
 function IncludeSass() {
@@ -68,5 +74,5 @@ function includeJS() {
 }
 
 
-exports.build = series(buildSass, buildJS, buildHtmlmin);
+exports.build = series(buildSass, buildJS, buildHtmlmin, compressImage);
 exports.start = series(IncludeSass, includeHtml, includeJS);
