@@ -45,9 +45,15 @@ function buildHtmlmin() {
 }
 
 function compressImage() {
-    return gulp.src(['src/assets/img/*', 'src/assets/svg/*.svg'])
+    return gulp.src('src/assets/img/*')
     .pipe(imagemin())
     .pipe(gulp.dest('dist/assets/img'))
+}
+
+function compressSVG() {
+    return gulp.src('src/assets/svg/*.svg')
+    .pipe(imagemin())
+    .pipe(gulp.dest('dist/assets/svg'))
 }
 
 function purifyCSS() {
@@ -81,6 +87,15 @@ function includeJS() {
         .pipe(gulp.dest('dist/assets/js'));
 }
 
+/* Watch */
+function observer() {
+    watch(['src/*.html', 'src/components/*.html'], includeHtml)
+    watch('src/assets/img/*.*', compressImage)
+    watch('src/assets/svg/*.*', compressSVG)
+    watch(['src/assets/sass/**'], IncludeSass)
+    watch('src/assets/js/**/*.js', includeJS)
+}
 
-exports.build = series(buildSass, buildJS, buildHtmlmin, compressImage, purifyCSS);
-exports.start = series(IncludeSass, includeHtml, includeJS);
+
+exports.build = series(buildSass, buildJS, buildHtmlmin, compressImage, compressSVG, purifyCSS);
+exports.start = series(IncludeSass, includeHtml, includeJS, compressImage, compressSVG, observer);
