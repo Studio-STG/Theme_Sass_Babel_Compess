@@ -19,7 +19,7 @@ const uglifycss = require('gulp-uglifycss');
 
 function buildSass() {
     return gulp.src('src/assets/sass/*.scss')
-      .pipe(sass({outputStyle: 'compress'}).on('error', sass.logError))
+      .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
       .pipe(rename('style.min.css'))
       .pipe(gulp.dest('dist/assets/css'));
 }
