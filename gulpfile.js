@@ -45,7 +45,7 @@ function buildHtmlmin() {
 }
 
 function compressImage() {
-    return gulp.src('src/assets/img/*')
+    return gulp.src(['src/assets/img/*', 'src/assets/svg/*.svg'])
     .pipe(imagemin())
     .pipe(gulp.dest('dist/assets/img'))
 }
