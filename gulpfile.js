@@ -9,16 +9,17 @@ const htmlmin = require('gulp-htmlmin');
 const fileinclude = require('gulp-file-include');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
-const uglify = require('gulp-uglify');
+const uglifyjs = require('gulp-uglify');
 const sass = require('gulp-sass')(require('sass'));
-var rename = require("gulp-rename");
-
+const rename = require("gulp-rename");
+const purify = require('gulp-purify-css');
+const uglifycss = require('gulp-uglifycss');
 
 /* Production */
 
 function buildSass() {
     return gulp.src('src/assets/sass/*.scss')
-      .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+      .pipe(sass({outputStyle: 'compress'}).on('error', sass.logError))
       .pipe(rename('style.min.css'))
       .pipe(gulp.dest('dist/assets/css'));
 }
@@ -29,7 +30,7 @@ function buildJS() {
             presets: ['@babel/env']
         }))
         .pipe(concat('main.min.js'))
-        .pipe(uglify())
+        .pipe(uglifyjs())
         .pipe(gulp.dest('dist/assets/js'));
 }
 
@@ -47,6 +48,13 @@ function compressImage() {
     return gulp.src('src/assets/img/*')
     .pipe(imagemin())
     .pipe(gulp.dest('dist/assets/img'))
+}
+
+function purifyCSS() {
+    return gulp.src('dist/assets/css/style.min.css')
+        .pipe(purify(['dist/assets/js/*.js', 'dist/*.html']))
+        .pipe(uglifycss())
+        .pipe(gulp.dest('dist/assets/css'));
 }
 
 /* Development */
@@ -74,5 +82,5 @@ function includeJS() {
 }
 
 
-exports.build = series(buildSass, buildJS, buildHtmlmin, compressImage);
+exports.build = series(buildSass, buildJS, buildHtmlmin, compressImage, purifyCSS);
 exports.start = series(IncludeSass, includeHtml, includeJS);

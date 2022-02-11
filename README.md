@@ -9,7 +9,9 @@ Tema com o **Gulp** para projetos que utilizam as seguintes tecnologias:
  - Sass  ( **gulp-sass** )
  - HTML Minificador ( **gulp-htmlmin** )
  - JS Minificador ( **gulp-uglify** )
+ - CSS Minificador ( **gulp-uglifycss** )
  - Image min ( **gulp-imagemin** )
+ - purifyCSS ( **gulp-uglifycss** )
 
  # Instação do tema
 Requisitos mínimos: 
